@@ -5,8 +5,10 @@ import { renderToString } from 'react-dom/server';
 import path from 'path';
 import fs from 'fs';
 import Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack'
 
 import App from '../src/App';
+import stats from '../build/react-loadable.json';
 
 const app = new Koa();
 const template = fs.readFileSync(path.join(__dirname, '../build/index.html'), { encoding: 'utf8'});
@@ -20,7 +22,6 @@ const render = (ctx) => {
     </Loadable.Capture>
   );
 
-
   const bundles = getBundles(stats, modules);
 
   const styles = bundles.filter(bundle => bundle.file.endsWith('.css')).map(style => {
@@ -30,10 +31,8 @@ const render = (ctx) => {
     return `<script src="/dist/${script.file}"></script>`
   }).join('\n');
 
-  console.log(styles, scripts)
-
   const page = template
-    .replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+    .replace('<div id="root"></div>', `<div id="root">${html}</div>${scripts}`);
 
   ctx.body = page;
 }
