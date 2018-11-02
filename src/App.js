@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Loadable from 'react-loadable';
+
+import Loading from './Loading';
+
+const ByeLoadable = Loadable({
+  loader: () => import('./Bye'),
+  loading: Loading,
+});
+
+const GreeterLoadable = Loadable({
+  loader: () => import('./Greeter'),
+  loading: Loading,
+});
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      bye: false,
+    }
+  }
+
+  toggleBye() {
+    this.setState(({bye}) => ({bye: !bye}))
+  }
+
   render() {
+    const { bye } = this.state;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <GreeterLoadable/>
+        <button onClick={() => this.toggleBye()}>toggle</button>
+        {bye && (
+          <ByeLoadable/>
+        )}
       </div>
     );
   }
