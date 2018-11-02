@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Loadable from 'react-loadable';
 
 import Loading from './Loading';
+//import Bye from './Bye';
+//import Greeter from './Greeter';
 
-const ByeLoadable = Loadable({
+const Bye = Loadable({
   loader: () => import('./Bye'),
   loading: Loading,
 });
 
-const GreeterLoadable = Loadable({
+const Greeter = Loadable({
   loader: () => import('./Greeter'),
   loading: Loading,
 });
@@ -31,10 +33,10 @@ class App extends Component {
 
     return (
       <div>
-        <GreeterLoadable/>
+        <Greeter/>
         <button onClick={() => this.toggleBye()}>toggle</button>
         {bye && (
-          <ByeLoadable/>
+          <Bye/>
         )}
       </div>
     );
