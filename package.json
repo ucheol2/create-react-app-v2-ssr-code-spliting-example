@@ -61,7 +61,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "start:server": "NODE_ENV=test node server/bootstrap"
+    "start:server": "BABEL_ENV=test node server/bootstrap"
   },
   "eslintConfig": {
     "extends": "react-app"
